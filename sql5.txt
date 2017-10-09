@@ -1,0 +1,107 @@
+9. Query to display name of the FACULTY
+mysql> SELECT FACNAME FROM FACULTY;
++---------+
+| FACNAME |
++---------+
+| BIBIN   |
+| TIBIN   |
+| ABIN    |
++---------+
+3 rows in set (0.00 sec)
+
+10. Query to display number of FACULties
+mysql> select count(*) from faculty;
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0.01 sec)
+
+11. Query to display totol marks of each student
+
+mysql> select student.sname, sum(max_mark.mark) from max_mark, student where student.scode = max_mark.stcode group by stcode;
++-------+--------------------+
+| sname | sum(max_mark.mark) |
++-------+--------------------+
+| DIBIN |                160 |
+| JEBIN |                180 |
+| SEBIN |                160 |
+| XYZ   |                100 |
+| KLM   |                 89 |
++-------+--------------------+
+5 rows in set (0.01 sec)
+
+12. Query to display subject, average marks for each student
+
+mysql> select student.sname, avg(max_mark.mark) from max_mark, subject, student where max_mark.subcode = subject.subcode and max_mark.stcode = student.scode group by max_mark.stcode;     
++-------+--------------------+
+| sname | avg(max_mark.mark) |
++-------+--------------------+
+| DIBIN |            80.0000 |
+| JEBIN |            90.0000 |
+| SEBIN |            80.0000 |
+| XYZ   |            50.0000 |
+| KLM   |            44.5000 |
++-------+--------------------+
+5 rows in set (0.01 sec)
+
+13. query to display name of subject for which atleast one of the students scores below 40%
+
+mysql> select subject.subname from subject, max_mark where max_mark.subcode = subject.subcode and max_mark.mark < 40;
++---------+
+| subname |
++---------+
+| MATHS   |
+| EC      |
++---------+
+2 rows in set (0.00 sec)
+
+14. Query to display name, branch, percentage of marks for those who get below 40%
+
+mysql> select student.sname, student.branch, max_mark.mark as mark from student, subject, max_mark where max_mark.stcode = student.scode and max_mark.subcode = subject.subcode and max_mark.mark<40;
++-------+--------+------+
+| sname | branch | mark |
++-------+--------+------+
+| KLM   | CS     |   30 |
+| XYZ   | EC     |   35 |
++-------+--------+------+
+2 rows in set (0.00 sec)
+
+15. Query to display faculty and alloted subject for each faculty
+
+mysql> select faculty.facname, subject.subname from faculty, subject where faculty.fac_code = subject.faculty_code;
++---------+---------+
+| facname | subname |
++---------+---------+
+| TIBIN   | MATHS   |
+| ABIN    | C       |
+| BIBIN   | EC      |
++---------+---------+
+3 rows in set (0.01 sec)
+
+16. Name of the students whose age is below 22 years
+
+mysql> SELECT SNAME FROM STUDENT WHERE (DATEDIFF(SYSDATE(), DOB)-5)/365 < 22;
++-------+
+| SNAME |
++-------+
+| DIBIN |
+| JEBIN |
+| SEBIN |
+| XYZ   |
+| KLM   |
++-------+
+5 rows in set (0.00 sec)
+
+17. Display name, subject, mark and percentage of mark in ascenging order of marks
+
+
+
+18. Alter table to add a column total marks
+
+19. Query to list the name of the student born in the year 2000
+
+20. Query to list the student name, date of birth in the format dd-mm-yy
+
+21. Create an assertion to check that the total marks of student does not exceed 100
