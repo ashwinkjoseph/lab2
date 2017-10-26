@@ -176,7 +176,7 @@ int main()
 					 printf( "Could not open file %s\n", fileName ) ;
 					 return 1;
 				 }
-				 
+			
 				  while(1){
 				 	scanf("%s", line);
 				 	if(strcmp(":wq", line)==0){
