@@ -65,6 +65,46 @@ void scan(int noq, int qu[10], int st, int ch)
 printf("\n Total seek time : %d",s);
 }
 
+void cscan(int noq, int qu[10], int st, int n)
+{
+ int i,j,s=0;
+ int dir = 0;
+ for(i = 0; i<noq; i++){
+ 	printf("%d", qu[noq]);
+ }
+// for(i=0; i<noq; i++){
+// 	s=s+st;
+// 	
+// 	if(qu[i]>st){
+// 		st = 
+// 	}
+ //}
+// for(i=0;i<noq;i++)
+// {
+//  if(st < qu[i])
+//  {
+//   for(j=i-1; j>= 0;j--)
+//   {
+//    s=s+abs(st - qu[j]);
+//    st = qu[j];
+//    }
+//   if(ch == 3)
+//   {
+//   s = s + abs(st - 0);
+ //  st = 0;
+ //  }
+//  for(j = 1;j < noq;j++)
+//  {
+//  s= s + abs(st - qu[j]);
+//  st = qu[j];
+//   }
+//   break;
+// }
+//}
+printf("\n Total seek time : %d",s);
+}
+
+
 int main()
 {
  int n,qu[20],st,i,j,t,noq,ch,visit[20];
@@ -86,7 +126,8 @@ int main()
   printf("\n\n\t\t 1. FCFS \n");
   printf("\n\n\t\t 2. SSTF \n");
   printf("\n\n\t\t 3. SCAN \n");
-  printf("\n\n\t\t 4. EXIT \n");
+  printf("\n\n\t\t 4. C-SCAN \n");
+  printf("\n\n\t\t 5. EXIT \n");
   printf("\nEnter your choice: ");
   scanf("%d",&ch);
   if(ch > 2)
@@ -115,7 +156,11 @@ int main()
             printf("\n*****\n");
             scan(noq,qu,st,ch);
             break;
-    case 4: exit(0);
+    case 4: printf("\n C-SCAN \n");
+            printf("\n*****\n");
+            cscan(noq,qu,st,n);
+            break;
+    case 5: exit(0);
  }
  }
 }

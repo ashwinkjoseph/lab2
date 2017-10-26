@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+
+
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head><link rel="canonical" href="https://msdn
+.microsoft.com/en-us/library/6dekhbbc.aspx" />
+    <title>try, throw, and catch Statements (C++)</title>
+
+
+
+
+
+
+
+<meta name="DCS.
+dcsuri" content="/en-us/library/6dekhbbc(d=default,l=en-us,v=vs.140).aspx" />
+
+<meta name="NormalizedUrl" content="https://msdn.
+microsoft.com/en-us/library/6dekhbbc(d=default,l=en-us,v=vs.140).aspx" />
+
+<meta name="ms.normalizedurl" content="https://msdn.m
+icrosoft.com/en-us/library/6dekhbbc(d=default,l=en-us,v=vs.140).aspx" />
+
+<meta name="ms.prod" content="visual-studio-dev14" />
+
+
+<meta name="ms.devlang" content="cpp" />
+
+<meta name="ms.topic" content="language-reference" />
+
+<meta name="VotingContextUrl" 
+content="https://msdn.microsoft.com/en-us/library/6dekhbbc(d=default,l=en-us,v=vs.140).aspx" />
+
+<meta name="MN" content="4B9B1F
+28-3:08:13 AM" />
+
+<meta name="Search.ShortId" content="6dekhbbc" />
+
+<meta name="ms.shortidmsdn" content="6dekhbbc" />
+
+<meta n
+ame="ms.locale" content="en-us" />
+
+<meta name="ms.prodver" content="VS.140" />
+
+<meta name="ms.contentlang" content="EN" />
+
+<m
+eta name="ms.lang" content="EN" />
+
+<meta name="ms.loc" content="US" />
+
+<meta name="ms.sitever" content="2017.09.29.3" />
+
+<met
+a name="ms.assetid" content="15e6a87b-b8a5-4032-a7ef-946c644ba12a" />
+
+<meta name="ms.auth" content="0" />
+
+<meta name="ms.techn
+ology" content="devlang-cpp" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+        
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" data-do-not-move="true">
+        //<![CDATA[
+        var AmbientContext = null;
+
+      
+  (function(){
+            var root = (function(){return this;}).call(null);
+
+            var GetCookie = function(name){
+      
+          var cookies = root.document.cookie ? root.document.cookie.split('; ') : [];
+                for (var i = 0; i < cookie
+s.length; i++) {
+                    var pos = cookies[i].indexOf('=');
+                    if (name === root.decodeURIComponent
+(cookies[i].slice(0, pos)))
+                    {
+                        var cookie = cookies[i].slice(pos + 1).replace(/\+/g, 
+' ');
+                        cookie = root.decodeURIComponent(cookie);
+                        return cookie;
+                 
+   }
+                }
+            };
+
+            var JsonDeserialize = function(content) {
+                return root.JSON &&
+ root.JSON.parse ? root.JSON.parse(content) : (new Function('return (' + content + ')'))();
+            };
+
+            try {
+  
+              AmbientContext = GetCookie('AmbientContext');
+                AmbientContext = AmbientContext && JsonDeserialize(A
+mbientContext);
+            } catch(ex) {
+            } finally {
+                AmbientContext = AmbientContext || null;
+     
+       }
+        })();
+        //]]>
+    </script>
+
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQue
+ry/jquery-1.9.1.min.js" data-do-not-move="true" data-provides="jQuery"></script>
+    
+<link rel="stylesheet" type="text/css" hre
+f="https://uhf.microsoft.com/mscc/statics/mscc-0.3.6.min.css" /><link rel="stylesheet" type="text/css" href="https://i-msdn.sec.
+s-msft.com/Combined.css?resources=0:ImageSprite,0:TopicResponsive,0:TopicResponsive.MediaQueries,1:CodeSnippet,1:ProgrammingSele
+ctor,1:ExpandableCollapsibleArea,0:CommunityContent,1:TopicNotInScope,1:FeedViewerBasic,1:ImageSprite,2:Header,2:HeaderFooterSpr
+ite,2:Header.MediaQueries,3:Banner.MediaQueries,0:Breadcrumbs,0:Breadcrumbs.MediaQueries,0:ResponsiveToc,0:ResponsiveToc.MediaQu
+eries,1:VersionSelector,0:LibraryMemberFilter,2:Footer,2:Footer.MediaQueries,4:StandardRating,5:LinkList,0:BaseResponsive,6:Msdn
+Responsive,0:Tables.MediaQueries;/Areas/Library/Content:0,/Areas/Epx/Content/Css:1,/Areas/Centers/Themes/StandardDevCenter/Conte
+nt:2,/Areas/Epx/Shared/Content:3,/Areas/Global/Content:4,/Areas/Epx/Themes/Base/Content:5,/Areas/Library/Themes/Msdn/Content:6&a
+mp;amp;v=A12E0682B1C43F6DD42EBB4575A81B90" /></head>
+<body class="library ">
+    <div id="page">
+
+        
+
+        
+    
+
+
+    
+
+    <link type="text/css" rel="stylesheet" />
+    
+        
+        
+    <input type="hidden" id="isHeaderBleeding" value="true
+" />
+    <div id="ux-header" dir="ltr" class="ltr msdn" ms.pgarea="header">
+        
+            
+            
+        <div id="
+ux-banner">
+            <div id="msccBanner" dir="ltr" data-site-name="msdn.microsoft.com" data-mscc-version="0.3.6" data-nver="
+aspnet-2.0.6" data-sver="0.1.2" class="cc-banner" role="alert"><div class="cc-container"><svg class="cc-icon cc-v-center" x="0px
+" y="0px" viewBox="0 0 44 44" height="30px" fill="none" stroke="currentColor"><circle cx="22" cy="22" r="20" stroke-width="2"></
+circle><line x1="22" x2="22" y1="18" y2="33" stroke-width="3"></line><line x1="22" x2="22" y1="12" y2="15" stroke-width="3"></li
+ne></svg> <span class="cc-v-center cc-text">This site uses cookies for analytics, personalized content and ads. By continuing to
+ browse this site, you agree to this use.</span> <a href="https://go.microsoft.com/fwlink/?linkid=845480" aria-label="Learn more
+ about Microsoft’s Cookie Policy" id="msccLearnMore" class="cc-link cc-v-center cc-float-right" data-mscc-ic="false">Learn mor
+e</a></div></div>
+        </div>
+
+      <header>
+        <span id="singleCol"></span>
+        <span id="doubleCol"></span>
+     
+   <span id="isMobile"></span>
+        <div>
+          <div class="row topRow" role="banner">
+            <div class="top">
+    
+          <div class="left">
+                <a class="msdnLogoImg" href="https://msdn.microsoft.com/en-us" title="MSDN home" ms
+.cmpgrp="mslogo">
+                  <div class="clip70x15">
+                    <img alt="Microsoft Logo" id="msft-logo" class="
+msft-logo" src="https://i-msdn.sec.s-msft.com/Areas/Centers/Themes/StandardDevCenter/Content/HeaderFooterSprite.png?v=6364225935
+44160354" />
+                  </div>
+                </a>
+                <div class="GrayPipeDiv clip1x18">
+                  
+<img alt="Gray Pipe" class="GrayPipe" src="https://i-msdn.sec.s-msft.com/Areas/Centers/Themes/StandardDevCenter/Content/HeaderFo
+oterSprite.png?v=636422593544160354" />
+                </div>
+                  <a class="DevCenterFullNameNonMegaBlade" href="
+https://msdn.microsoft.com/en-us">Developer Network</a>
+                <a class="DevCenterFullName" href="https://msdn.microsof
+t.com/en-us">Developer Network</a>
+                <a class="DevCenterShortName" href="https://msdn.microsoft.com/en-us">Develop
+er</a>
+              </div>
+              <div class="right" ms.cmpgrp="aux nav">
+                <div id="signIn" aria-label="P
+rofile button">
+
+  <div class="profileImage"></div>
+
+
+
+<a class="scarabLink" href="https://login.live.com/login.srf?wa=wsignin1.
+0&amp;rpsnv=13&amp;ct=1507198093&amp;rver=6.7.6640.0&amp;wp=mcmbi&amp;wlcxt=msdn%24msdn%24msdn&amp;wreply=https%3a%2f%2fmsdn.mic
+rosoft.com%2fen-us%2flibrary%2f6dekhbbc.aspx&amp;lc=1033&amp;id=254354&amp;mkt=en-us">Sign in</a></div>
+
+
+
+
+                <div
+ class="auxNav">
+                  <div>
+                    <div data-fragmentName="Subscriptions" id="Fragment_Subscriptions" 
+xmlns="http://www.w3.org/1999/xhtml">
+  <a href="https://my.visualstudio.com/?wt.mc_id=o~msft~msdn~nav~subscriber&amp;campaign=o
+~msft~msdn~nav~subscriber" id="Subscriptions_2153_1" xmlns="http://www.w3.org/1999/xhtml">
+    <p xmlns="">Subscriber portal</p>
+
+  </a>
+</div>
+                    <div data-fragmentName="GetTools" id="Fragment_GetTools" xmlns="http://www.w3.org/1999/xhtml"
+>
+  <a href="https://www.visualstudio.com/free-developer-offers/" id="GetTools_2153_3" xmlns="http://www.w3.org/1999/xhtml">Get 
+tools</a>
+</div>
+                  </div>
+                        <div>
+                            
+                        </d
+iv>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row middleRow">
+     
+       <div class="expandTop">
+              <div class="left"></div>
+              <div class="right"></div>
+            </div>
+
+          </div>
+        </div>
+        <div id="buttomRowWrapper" class="bg_default">
+          <div class="row buttomRow bg_d
+efault">
+            <div class="bottom">
+              <div class="left" role="navigation" aria-label="header toc" ms.cmpgrp="m
+ain nav">
+                <a id="grip" class="menu-icon" href="javascript:void(0)" role="button" aria-label="navigation menu" da
+ta-mscc-ic="false"></a>
+                
+                <div id="drawer">
+                  <div class="toc">
+                 
+   
+        <nav>
+            <ul class="navL1">
+                        <li class="inactive toggle">
+                          
+      <a href="javascript:void(0)" role="button" aria-expanded="false" data-mscc-ic="false">Downloads</a>
+                      
+          <ul class="navL2">
+                                        <li class="inactive">
+
+                                    
+            <a href="https://www.visualstudio.com/downloads/download-visual-studio-vs" role="link" title="Visual Studio">Visual 
+Studio</a>
+                                        </li>
+                                        <li class="inactive">
+
+        
+                                        <a href="https://msdn.microsoft.com/microsoft-sdks-msdn" role="link" title="SDKs">SDKs</
+a>
+                                        </li>
+                                        <li class="inactive toggle">
+
+         
+                                       <a href="javascript:void(0)" title="Trial software" role="button" aria-expanded="false" d
+ata-mscc-ic="false">Trial software</a>
+                                                <ul class="navL3">
+                      
+                                  <li class="inactive">
+                                                            <a href="htt
+ps://msdn.microsoft.com/evalcenter" title="Free downloads" role="link">Free downloads</a>
+                                      
+                  </li>
+                                                        <li class="inactive">
+                          
+                                  <a href="https://msdn.microsoft.com/officeevaluationresources" title="Office resources" role="
+link">Office resources</a>
+                                                        </li>
+                                       
+                 <li class="inactive">
+                                                            <a href="https://msdn.microso
+ft.com/sharepoint2013resources" title="SharePoint Server 2013 resources" role="link">SharePoint Server 2013 resources</a>
+      
+                                                  </li>
+                                                        <li class="inact
+ive">
+                                                            <a href="https://msdn.microsoft.com/sqlserver2014expressresour
+ces" title="SQL Server 2014 Express resources" role="link">SQL Server 2014 Express resources</a>
+                               
+                         </li>
+                                                        <li class="inactive">
+                   
+                                         <a href="https://msdn.microsoft.com/windowsserver2012r2resources" title="Windows Server
+ 2012 resources" role="link">Windows Server 2012 resources</a>
+                                                        </li>
+   
+                                             </ul>
+                                        </li>
+                               
+ </ul>
+                        </li>
+                        <li class="inactive toggle">
+                                <a hre
+f="javascript:void(0)" role="button" aria-expanded="false" data-mscc-ic="false">Programs</a>
+                                <ul
+ class="navL2">
+                                        <li class="inactive toggle">
+
+                                          
+      <a href="javascript:void(0)" title="Subscriptions" role="button" aria-expanded="false" data-mscc-ic="false">Subscriptions<
+/a>
+                                                <ul class="navL3">
+                                                        <
+li class="inactive">
+                                                            <a href="https://msdn.microsoft.com/msdn-subscr
+iptions-overview" title="Overview" role="link">Overview</a>
+                                                        </li>
+      
+                                                  <li class="inactive">
+                                                        
+    <a href="https://msdn.microsoft.com/msdn-subscriptions-administration" title="Administrators" role="link">Administrators</a>
+
+                                                        </li>
+                                                </ul>
+           
+                             </li>
+                                        <li class="inactive toggle">
+
+                       
+                         <a href="javascript:void(0)" title="Students" role="button" aria-expanded="false" data-mscc-ic="false">
+Students</a>
+                                                <ul class="navL3">
+                                                
+        <li class="inactive">
+                                                            <a href="https://msdn.microsoft.com/im
+agine/imagine-home" title="Microsoft Imagine" role="link">Microsoft Imagine</a>
+                                                
+        </li>
+                                                        <li class="inactive">
+                                    
+                        <a href="https://msdn.microsoft.com/microsoftstudentpartners" title="Microsoft Student Partners" role="l
+ink">Microsoft Student Partners</a>
+                                                        </li>
+                              
+                  </ul>
+                                        </li>
+                                        <li class="inactiv
+e">
+
+                                                <a href="https://msdn.microsoft.com/applicationbuilder" role="link" title="
+ISV">ISV</a>
+                                        </li>
+                                        <li class="inactive">
+
+      
+                                          <a href="https://www.microsoft.com/bizspark" role="link" title="Startups">Startups</a>
+
+                                        </li>
+                                        <li class="inactive">
+
+                  
+                              <a href="https://events.microsoft.com/" role="link" title="Events">Events</a>
+                    
+                    </li>
+                                </ul>
+                        </li>
+                        <li class=
+"inactive toggle">
+                                <a href="javascript:void(0)" role="button" aria-expanded="false" data-mscc-ic
+="false">Community</a>
+                                <ul class="navL2">
+                                        <li class="ina
+ctive">
+
+                                                <a href="https://msdn.microsoft.com/magazine/dd767791" role="link" titl
+e="Magazine">Magazine</a>
+                                        </li>
+                                        <li class="inact
+ive">
+
+                                                <a href="https://social.msdn.microsoft.com/forums/" role="link" title="Fo
+rums">Forums</a>
+                                        </li>
+                                        <li class="inactive">
+
+  
+                                              <a href="https://blogs.msdn.microsoft.com/" role="link" title="Blogs">Blogs</a>
+  
+                                      </li>
+                                        <li class="inactive">
+
+                     
+                           <a href="https://channel9.msdn.com/" role="link" title="Channel 9">Channel 9</a>
+                    
+                    </li>
+                                </ul>
+                        </li>
+                        <li class=
+"inactive current toggle">
+                                <a href="javascript:void(0)" role="button" aria-expanded="false" data
+-mscc-ic="false">Documentation</a>
+                                <ul class="navL2">
+                                        <l
+i class="inactive current">
+
+                                                <a href="https://msdn.microsoft.com/library" role="
+link" title="APIs and reference">APIs and reference</a>
+                                        </li>
+                          
+              <li class="inactive">
+
+                                                <a href="https://msdn.microsoft.com/develop
+er-centers-msdn" role="link" title="Dev centers">Dev centers</a>
+                                        </li>
+                 
+                       <li class="inactive">
+
+                                                <a href="https://code.msdn.microso
+ft.com/" role="link" title="Samples">Samples</a>
+                                        </li>
+                                 
+       <li class="inactive">
+
+                                                <a href="https://msdn.microsoft.com/mt703209" role
+="link" title="Retired content">Retired content</a>
+                                        </li>
+                              
+  </ul>
+                        </li>
+            </ul>
+        </nav>
+
+                  </div>
+                </div>
+        
+      </div>
+              <div class="right" ms.title="search" role="search">
+                <div data-fragmentName="SearchBox
+" id="Fragment_SearchBox" xmlns="http://www.w3.org/1999/xhtml">
+  <div class="SearchBox">
+    <form id="HeaderSearchForm" name="
+HeaderSearchForm" method="get">
+      <button id="FakeHeaderSearchButton" value="Search" type="submit" class="header-search-butt
+on" role="button" aria-label="search finder">
+        <div id="search-finder-div" class="clip16x20">
+          <img alt="search 
+finder" id="search-finder" class="search-finder" src="https://i-msdn.sec.s-msft.com/Areas/Centers/Themes/StandardDevCenter/Conte
+nt/HeaderFooterSprite.png?v=636422593544160354" />
+        </div>
+      </button>
+      <button id="HeaderSearchButton" style="d
+isplay:none"></button>
+      <div id="searchSplitter"></div>
+      <div id="searchCloseIconDiv" class="clip16x20" tabindex="0">
+
+        <img alt="search clear" id="searchCloseIcon" class="search-clear-x" src="https://i-msdn.sec.s-msft.com/Areas/Centers/The
+mes/StandardDevCenter/Content/HeaderFooterSprite.png?v=636422593544160354" />
+      </div>
+      <div id="searchTextContainer" s
+tyle="width: 0;">
+        <input id="HeaderSearchTextBox" name="query" type="text" aria-label="search edit textbox" maxlength="2
+00" onfocus="Epx.Controls.SearchBox.watermarkFocus(event, this.title)" onblur="Epx.Controls.SearchBox.watermarkBlur(event, this.
+title)" />
+      </div>
+    </form>
+    
+    
+  </div>
+</div>
+              </div>
+            </div>
+          </div>
+        <
+/div>
+
+      </header>
+
+    </div>
+
+    
+    
+    
+    <div id="jumpInfo" style="display: none">We’re sorry. The content you r
+equested has been removed. You’ll be auto redirected in 1 second.</div>
+
+
+
+
+
+<link type="text/css" rel="stylesheet" />
+<link t
+ype="text/css" rel="stylesheet" />
+
+
+    <div id="breadcrumbs" ms.pgarea="body" ms.cmpgrp="breadcrumbs">
+        <div id="breadc
+rumbDesktop" class="breadCrumb">
+                        <span class="breadcrumbEllipsis"><a href="https://msdn.microsoft.com/en
+-us/library/hh875057.aspx" title="C/C++ Language and Standard Libraries"></a></span>
+                        <span><a href="http
+s://msdn.microsoft.com/en-us/library/3bstk3k5.aspx" title="C++ Language Reference"><span>C++ Language Reference</span></a></span
+>
+                        <span><a href="https://msdn.microsoft.com/en-us/library/x057540h.aspx" title="Exception Handling"><spa
+n>Exception Handling</span></a></span>
+                        <span class="breadcrumbDropSmall">
+                            <a
+ id="breadcrumbDropDownButton" href="#" targethref="https://msdn.microsoft.com/en-us/library/x057540h.aspx" title="C++ Exception
+ Handling"><span>C++ Exception Handling</span></a>
+                        </span>
+        </div>
+        <div id="breadcrumbDro
+pDownMenu"></div>
+
+        <div id="breadcrumbTablet" class="breadCrumb">
+                        <span class="breadcrumbEllipsi
+s"><a href="https://msdn.microsoft.com/en-us/library/x057540h.aspx" title="Exception Handling"></a></span>
+                    <
+span><a href="https://msdn.microsoft.com/en-us/library/4t3saedz.aspx" title="C++ Exception Handling"><span>C++ Exception Handlin
+g</span></a></span>
+                <span class="breadcrumbDropSmall"><a id="tocDropDownButton" href="#" title="try, throw, and 
+catch Statements (C++)"><span>try, throw, and catch Statements (C++)</span></a></span>
+        </div>
+        <div id="tocDropDo
+wnMenu"></div>
+        <div id="breadcrumbMobile" class="breadCrumb">
+                <span class="breadcrumbEllipsis"><a href="
+https://msdn.microsoft.com/en-us/library/4t3saedz.aspx" title="C++ Exception Handling"></a></span>
+            <span class="brea
+dcrumbDropSmall"><a id="tocPopupButton" href="#" title="try, throw, and catch Statements (C++)"><span>try, throw, and catch Stat
+ements (C++)</span></a></span>
+        </div>
+    </div>
+    <div id="tocPopupMenu">
+        <div id="tocPopMenuClose" class="to
+cCloseLarge"></div>
+        <div id="tocTitle">try, throw, and catch Statements (C++)</div>        
+    </div>
+
+    
+
+
+        <
+div id="body" ms.pgarea="body" class="">
+            <span id="tabletView_large"></span>
+            <span id="tabletView_small"
+></span>
+            <span id="mobileView"></span>
+            
+
+
+
+
+
+
+
+
+
+    <div id="leftNav" ms.cmpgrp="left toc" role="naviga
+tion" aria-label="left toc">
+
+    
+
+
+<div id="tocnav" class="ArchiveV2">
+    <div class="tocunselected">
+        <div id="tocExp
+andArea">
+            <span class="toc_empty"></span>
+            <span id="tocExpandButton"><a href="javascript:void(0)" aria-l
+abel="expand sibling toc" role="button"></a></span>
+        </div>
+        <div id="tocExpand"></div>
+    </div>
+    <div class=
+"tocselected"></div>
+    <div class="tocunselected">
+                <div class="toclevel current" data-toclevel="1">
+<a href="h
+ttps://msdn.microsoft.com/en-us/library/6dekhbbc.aspx" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="try, throw, and catch
+ Statements (C++)">try, throw, and catch Statements (C++)</a>                </div>
+                <div class="toclevel " data-
+toclevel="1">
+<a href="https://msdn.microsoft.com/en-us/library/4tebey8h.aspx" mtpsaliasid="" mtpsassetid="" mtpsshortid="" titl
+e="How Catch Blocks are Evaluated">How Catch Blocks are Evaluated</a>                </div>
+                <div class="toclevel
+ " data-toclevel="1">
+<a href="https://msdn.microsoft.com/en-us/library/hh254939.aspx" mtpsaliasid="" mtpsassetid="" mtpsshortid
+="" title="Exceptions and Stack Unwinding">Exceptions and Stack Unwinding</a>                </div>
+                <div class="
+toclevel " data-toclevel="1">
+<a href="https://msdn.microsoft.com/en-us/library/wfa0edys.aspx" mtpsaliasid="" mtpsassetid="" mtp
+sshortid="" title="Exception Specifications (throw)">Exception Specifications (throw)</a>                </div>
+                
+<div class="toclevel " data-toclevel="1">
+<a href="https://msdn.microsoft.com/en-us/library/dn956976.aspx" mtpsaliasid="" mtpsas
+setid="" mtpsshortid="" title="noexcept">noexcept</a>                </div>
+                <div class="toclevel " data-toclevel
+="1">
+<a href="https://msdn.microsoft.com/en-us/library/ac9f67ah.aspx" mtpsaliasid="" mtpsassetid="" mtpsshortid="" title="Unhan
+dled C++ Exceptions">Unhandled C++ Exceptions</a>                </div>
+                <div class="toclevel " data-toclevel="1"
+>
+<a data-tochassubtree="true" href="https://msdn.microsoft.com/en-us/library/5skw957f.aspx" id="mt561142_VS.140_en-us" mtpsalia
+sid="" mtpsassetid="" mtpsshortid="" title="Mixing C (Structured) and C++ Exceptions">Mixing C (Structured) and C++ Exceptions</
+a>                </div>
+    </div>
+    <a id="tocMenuToggler" href="javascript:void(0)" role="button">
+        <span id="tocMen
+uTogglerIcon" class="tocMenuCollapse" role="button" aria-expanded="true" aria-label="Table of contents menu"></span>
+        <di
+v id="tocMenuTogglerLabel">TOC</div>
+    </a>
+</div>            <div style="display:none">
+                <div id="CollapseLoca
+lizeString">Collapse the table of content</div>
+                <div id="ExpandLocalizeString">Expand the table of content</div>
+
+            </div>
+        <div>
+            <a id="isd_archiveControlResponsive" style="display:none;" href="javascript:void(0
+)" role="button" aria-label="Hide Archived Versions" data-include-archive="Show Archived Versions" data-exclude-archive="Hide Ar
+chived Versions">
+            </a>
+            <div id="isd_archiveInstrument" style="display:none">This documentation is archiv
+ed and is not being maintained.</div>
+        </div>
+    </div>
+     <div id="content" class="content" ms.cmpgrp="content body" 
+role="main">
+
+
+
+
+
+
+
+
+    <div id="archiveDisclaimerText" style="display:none">This documentation is archived and is not being ma
+intained.</div>
+
+
+
+<div xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="topic">
+    <h1 class="title">try, throw, and cat
+ch Statements (C++)</h1>
+    
+    <div class="lw_vs">
+      <div id="curversion">
+        <strong>
+                Visual Studio
+ 2015 
+            </strong>
+      </div>
+      <div id="versionclick">
+        <div id="vsseperator" class="cl_lw_vs_seperator"
+></div>
+        <div>
+          <div>
+            <a id="vsLink" href="javascript:void(0)" role="button" aria-label="Other Versi
+ons" aria-expanded="false">
+                        Other Versions
+                    </a>
+          </div>
+          <div clas
+s="cl_vs_arrow clip10x10">
+            <img class="cl_lw_vs_arrow" id="vsArrow" alt="" src="https://i-msdn.sec.s-msft.com/Areas/
+Epx/Content/Images/ImageSprite.png?v=636422593604786198" />
+          </div>
+        </div>
+        <ul id="vsPanel">
+          
+<li class="archived">
+            <a href="/en-us/library/6dekhbbc(v=vs.120).aspx">Visual Studio 2013 </a>
+          </li>
+     
+     <li class="archived">
+            <a href="/en-us/library/6dekhbbc(v=vs.110).aspx">Visual Studio 2012</a>
+          </li>
+ 
+         <li class="archived">
+            <a href="/en-us/library/6dekhbbc(v=vs.100).aspx">Visual Studio 2010</a>
+          </l
+i>
+          <li class="archived">
+            <a href="/en-us/library/6dekhbbc(v=vs.90).aspx">Visual Studio 2008</a>
+          
+</li>
+          <li class="archived">
+            <a href="/en-us/library/6dekhbbc(v=vs.80).aspx">Visual Studio 2005</a>
+       
+   </li>
+          <li class="">
+            <a href="https://msdn.microsoft.com/en-us/mt703209?prefilter=visual studio .net 200
+3">View all retired versions</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div style="clear:both;"></div>
+    <
+div id="mainSection">
+      <div id="mainBody"> <p>The new home for Visual Studio documentation is <a href="http://docs.microso
+ft.com/visualstudio">Visual Studio 2017 Documentation</a> on docs.microsoft.com.</p><p>The latest version of this topic can be f
+ound at <a href="https://docs.microsoft.com/cpp/cpp/try-throw-and-catch-statements-cpp">try, throw, and catch Statements (C++)</
+a>.</p><p>To implement exception handling in C++, you use <code>try</code>, <code>throw</code>, and <code>catch</code> expressio
+ns.</p><p>First, use a <code>try</code> block to enclose one or more statements that might throw an exception.</p><p>A <code>thr
+ow</code> expression signals that an exceptional condition—often, an error—has occurred in a <code>try</code> block. You can
+ use an object of any type as the operand of a <code>throw</code> expression. Typically, this object is used to communicate info
+rmation about the error. In most cases, we recommend that you use the <a href="https://msdn.microsoft.com/en-us/library/c4ts6d5a
+.aspx">std::exception</a> class or one of the derived classes that are defined in the standard library. If one of those is not a
+ppropriate, we recommend that you derive your own exception class from  <code>std::exception</code>.</p><p>To handle exceptions 
+that may be thrown, implement one or more <code>catch</code> blocks immediately following a <code>try</code> block. Each <code>c
+atch</code> block specifies the type of exception it can handle.</p><p>This example shows a <code>try</code> block and its handl
+ers. Assume that <code>GetNetworkResource()</code> acquires data over a network connection and that the two exception types are 
+user-defined classes that derive from <code>std::exception</code>. Notice that the exceptions are caught by <code>const</code> r
+eference in the <code>catch</code> statement. We recommend that you throw exceptions by value and catch them by const reference.
+</p><div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a class="LW_CollapsibleArea_TitleAhref" title="Collapse" role="heading"><
+span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_Title">Example</span></a
+><div id="Anchor_0" class="LW_CollapsibleArea_Anchor_Div"><a href="/en-us/library/6dekhbbc.aspx#Anchor_0" class="LW_CollapsibleA
+rea_Anchor_Img" title="Right-click to copy and share the link for this section"></a></div><div class="LW_CollapsibleArea_HrDiv">
+<hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock"><a id="Example"></a></div></div>
+<div id="code-sn
+ippet-1" class="codeSnippetContainer" xmlns="">
+    <div class="codeSnippetContainerTabs">
+        
+    </div>
+    <div class="c
+odeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+            <div class="codeSnippetToolBarText">
+   
+             <a name="CodeSnippetCopyLink" style="display: none;" title="Copy to clipboard." href="javascript:if (window.epx.cod
+eSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_142f88cf-92e0-404a-b067-ec1f1b5f541f');" ms.cmptyp="CodeSnipp
+et">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetContainerCode_142f88cf-92e0-404a-b067-ec1f1b5f541f" c
+lass="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"><pre>
+  
+MyData md;  
+try {  
+   // Code that c
+ould throw an exception  
+   md = GetNetworkResource();  
+}  
+catch (const networkIOException&amp; e) {  
+   // Code that execut
+es when an exception of type  
+   // networkIOException is thrown in the try block  
+   // ...  
+   // Log error message in the 
+exception object  
+   cerr &lt;&lt; e.what();  
+}  
+catch (const myDataFormatException&amp; e) {  
+   // Code that handles anoth
+er exception type  
+   // ...  
+   cerr &lt;&lt; e.what();  
+}  
+  
+// The following syntax shows a throw expression  
+MyData Ge
+tNetworkResource()  
+{  
+   // ...  
+   if (IOSuccess == false)  
+      throw networkIOException("Unable to connect");  
+   // .
+..  
+   if (readError)  
+      throw myDataFormatException("Format error");   
+   // ...  
+}  
+
+</pre></div>
+            
+      
+  </div>
+    </div>
+</div>
+<div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a class="LW_CollapsibleArea_TitleAhref" title="Col
+lapse" role="heading"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img"></span><span class="LW_CollapsibleArea_T
+itle">Remarks</span></a><div id="Anchor_1" class="LW_CollapsibleArea_Anchor_Div"><a href="/en-us/library/6dekhbbc.aspx#Anchor_1"
+ class="LW_CollapsibleArea_Anchor_Img" title="Right-click to copy and share the link for this section"></a></div><div class="LW_
+CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div class="sectionblock"><a id="Remarks"></a></div>
+</div><p>The code after the <code>try</code> clause is the guarded section of code. The <code>throw</code> expression <em>throws
+</em>—that is, raises—an exception. The code block after the <code>catch</code> clause is the exception handler. This is the
+ handler that <em>catches</em> the exception that's thrown if the types in the <code>throw</code> and <code>catch</code> express
+ions are compatible. For a list of rules that govern type-matching in <code>catch</code> blocks, see <a href="https://msdn.micro
+soft.com/en-us/library/4tebey8h.aspx">How Catch Blocks are Evaluated</a>. If the <code>catch</code> statement specifies an ellip
+sis (...) instead of a type, the <code>catch</code> block handles every type of exception. When you compile with the <a href="ht
+tps://msdn.microsoft.com/en-us/library/1deeycx5.aspx">/EHa</a> option, these can include C structured exceptions and system-gene
+rated or application-generated asynchronous exceptions such as memory protection, divide-by-zero, and floating-point violations.
+ Because <code>catch</code> blocks are processed in program order to find a matching type, an ellipsis handler must be the last 
+handler for the associated <code>try</code> block. Use <code>catch(...)</code> with caution; do not allow a program to continue 
+unless the catch block knows how to handle the specific exception that is caught. Typically, a <code>catch(...)</code> block is 
+used to log errors and perform special cleanup before program execution is stopped.</p><p>A <code>throw</code> expression that h
+as no operand re-throws the exception currently being handled. We recommend this form when re-throwing the exception, because th
+is preserves the original exception’s polymorphic type information. Such an expression should only be used in a <code>catch</c
+ode> handler or in a function that's called from a <code>catch</code> handler. The re-thrown exception object is the original ex
+ception object, not a copy.</p>
+<div id="code-snippet-2" class="codeSnippetContainer" xmlns="">
+    <div class="codeSnippetConta
+inerTabs">
+        
+    </div>
+    <div class="codeSnippetContainerCodeContainer">
+        <div class="codeSnippetToolBar">
+    
+        <div class="codeSnippetToolBarText">
+                <a name="CodeSnippetCopyLink" style="display: none;" title="Copy to
+ clipboard." href="javascript:if (window.epx.codeSnippet)window.epx.codeSnippet.copyCode('CodeSnippetContainerCode_148f1a85-6e2f
+-4a48-a15b-d1aed5dbdd29');" ms.cmptyp="CodeSnippet">Copy</a>
+            </div>
+        </div>
+        <div id="CodeSnippetConta
+inerCode_148f1a85-6e2f-4a48-a15b-d1aed5dbdd29" class="codeSnippetContainerCode" dir="ltr">
+            <div style="color:Black;"
+><pre>
+try {  
+   throw CSomeOtherException();  
+}  
+catch(...) {  
+   // Catch all exceptions – dangerous!!!  
+   // Respond 
+(perhaps only partially) to the exception, then  
+   // re-throw to pass the exception to some other handler  
+   // ...  
+   th
+row;  
+}  
+
+</pre></div>
+            
+        </div>
+    </div>
+</div>
+<div><h2 class="LW_CollapsibleArea_TitleDiv"><div><a clas
+s="LW_CollapsibleArea_TitleAhref" title="Collapse" role="heading"><span class="cl_CollapsibleArea_expanding LW_CollapsibleArea_I
+mg"></span><span class="LW_CollapsibleArea_Title">See Also</span></a><div id="Anchor_2" class="LW_CollapsibleArea_Anchor_Div"><a
+ href="/en-us/library/6dekhbbc.aspx#Anchor_2" class="LW_CollapsibleArea_Anchor_Img" title="Right-click to copy and share the lin
+k for this section"></a></div><div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div></div></h2><div cl
+ass="sectionblock"><a id="See-Also"></a></div></div><p><a href="https://msdn.microsoft.com/en-us/library/4t3saedz.aspx">C++ Exce
+ption Handling</a><br /><a href="https://msdn.microsoft.com/en-us/library/2e6a4at9.aspx">Keywords</a><br /><a href="https://msdn
+.microsoft.com/en-us/library/ac9f67ah.aspx">Unhandled C++ Exceptions</a><br /><a href="https://msdn.microsoft.com/en-us/library/
+ff770584.aspx">__uncaught_exception</a></p></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="libraryMemberFilter">
+    <div cl
+ass="filterContainer">
+        <span>Show:</span>
+        <label>
+            <input type="checkbox" class="libraryFilterInherit
+ed" checked="checked" value="Inherit" />Inherited
+        </label>
+        <label>
+            <input type="checkbox" class="lib
+raryFilterProtected" checked="checked" value="Protected" />Protected
+        </label>
+    </div>
+</div>
+    
+<input type="hidden
+" id="libraryMemberFilterEmptyWarning" value="There are no members available with your current filter settings." />
+
+
+
+    </div
+>
+<div id="rightNavigationMenu" ms.cmpgrp="right nav">
+    <div id="mobileButtons">
+        <div id="navigationButtons">
+       
+     <a id="isd_print" href="https://msdn.microsoft.com/en-us/library/6dekhbbc(d=printer).aspx" rel="nofollow"><ins class="print
+"></ins>Print </a>
+            <a id="isd_printABook" href="/en-us/library/export/help/?returnurl=%2fen-us%2flibrary%2f6dekhbbc.
+aspx">
+                <ins class="export"></ins>Export (<span class="count">0</span>)
+            </a>
+        </div>
+    </div
+>
+    <div id="navMain">
+        <div id="closeNavigation">
+            <a class="tocCloseSmall" id="closeButton"></a>
+        <
+/div>
+        <div id="navigationButtons">
+            <a id="isd_print" href="https://msdn.microsoft.com/en-us/library/6dekhbbc
+(d=printer).aspx" rel="nofollow"><ins class="print"></ins>Print </a>
+            <a id="isdShare" href="#" role="button" aria-ex
+panded="false">
+                <ins class="share"></ins>Share
+            </a>
+            <div id="socials" style="display: no
+ne">
+                <a class="isdFacebook" href="#" aria-label="Share on Facebook">
+                    <ins class="facebook"><
+/ins>
+                </a>
+                <a class="isdTwitter" href="#" aria-label="Share on Twitter">
+                    <in
+s class="twitter"></ins>
+                </a>
+                <a class="isdGooglePlus" href="#" aria-label="Share on Google+">
+ 
+                   <ins class="googlePlus"></ins>
+                </a>
+            </div>
+        </div>
+        <div id="indoc_
+toc" style="display: none" ms.cmpgrp="indoc toc">
+            <div id="indoc_title">IN THIS ARTICLE</div>
+            <ul id="in
+doc_toclist"></ul>
+        </div>
+    </div>
+</div>
+<div id="rightNavigationMenuThumbnail" class="rightNavigationMenuThumbnail">
+
+</div>
+
+
+
+
+
+        </div>
+        <div class="clear"></div>
+
+        
+
+<input name="__RequestVerificationToken" type="hidden" 
+value="uuvGaThUm41PKtiuRLZhPRGLvDNkfqWwRKImeeKp8L0ySWy7OrunbpUZMjX4v88Sj32ONdnZP3TXY7xRN8Za06AjC1E1" />
+<input id="ratingValueSu
+bmitUrl" type="hidden" value="https://msdn.microsoft.com/en-us/library/feedback/rate/6dekhbbc.aspx" />
+<input id="ratingAddition
+alSubmitUrl" type="hidden" value="https://msdn.microsoft.com/en-us/library/feedback/additional/6dekhbbc.aspx" />
+<input id="isTo
+picRated" type="hidden" value="false" />
+
+
+
+
+    <div id="lib-footer">
+        
+
+    
+    <link type="text/css" rel="stylesheet"
+ />
+    
+        
+    <div id="ux-footer" class="" style="" dir="ltr" ms.pgarea="footer">
+
+
+    <div id="standardRatingBefore" c
+lass="clear stdr-container-before"></div>
+    <div id="standardRating" class="stdr-container" ms.pgarea="body">
+        <div cla
+ss="stdr-close"></div>
+        <div class="stdr-vote stdr-content">
+            <div class="stdr-content">
+                <span
+ class="stdr-votetitle">Is this page helpful?</span>
+                <button class="stdr-yes" aria-label="Yes, this page was hel
+pful">Yes</button>
+                <button class="stdr-no" aria-label="No, this page was not helpful">No</button>
+              
+  <input id="s_ratingValue" type="hidden" value="" />
+            </div>
+        </div>
+        <div class="stdr-feedback" style
+="display: none">
+            <div class="stdr-form">
+                <div class="stdr-fieldtitle">Additional feedback?</div>
+  
+              <textarea class="stdr-detail" rows="6" maxlength="1500"></textarea>
+                <div>
+                    <spa
+n class="stdr-count"><span class="stdr-charcnt">1500</span> characters remaining</span>
+                    <div class="stdr-but
+tons">
+                        <button class="stdr-provide" aria-label="Submit my additional feedback">Submit</button>
+         
+               <button class="stdr-skip" aria-label="Skip additional feedback">Skip this</button>
+                    </div>
+   
+             </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="stdr-thanks"
+ style="display: none">
+            <div class="stdr-content">
+                <span class="stdr-thankyou">Thank you!</span>
+   
+             <span class="stdr-appreciate">We appreciate your feedback.</span>
+            </div>
+        </div>
+
+        
+     
+   <div id="contentFeedbackQAContainer" style="display: none;"></div>
+    </div>
+    <div id="standardRatingPlaceholder" style="
+display: none"></div>
+    
+
+        <footer class="top" role="navigation" aria-label="footer">
+            <div data-fragmentNam
+e="LeftLinks" id="Fragment_LeftLinks" xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="linkList">
+    <h4 class="linkListT
+itle">Dev centers</h4>
+    <ul class="links">
+      <li>
+        <a href="https://developer.microsoft.com/en-us/windows" id="Lef
+tLinks_2148_1" class="windowsBlue" xmlns="http://www.w3.org/1999/xhtml">Windows</a>
+      </li>
+      <li>
+        <a href="http
+s://dev.office.com/" id="LeftLinks_2148_3" class="office" xmlns="http://www.w3.org/1999/xhtml">Office</a>
+      </li>
+      <li>
+
+        <a href="https://www.visualstudio.com/" id="LeftLinks_2148_4" class="visualStudio" xmlns="http://www.w3.org/1999/xhtml"
+>Visual Studio</a>
+      </li>
+      <li>
+        <a href="https://docs.microsoft.com/en-us/azure/" target="_blank" id="LeftLink
+s_2148_12" xmlns="http://www.w3.org/1999/xhtml">Microsoft Azure</a>
+      </li>
+      <li>
+        <a href="https://msdn.microso
+ft.com/developer-centers-msdn" id="LeftLinks_2148_5" xmlns="http://www.w3.org/1999/xhtml">More...</a>
+      </li>
+    </ul>
+  </
+div>
+</div>
+            <div id="rightLinks">
+                <div data-fragmentName="CenterLinks1" id="Fragment_CenterLinks1" x
+mlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="linkList">
+    <h4 class="linkListTitle">Learning resources</h4>
+    <ul c
+lass="links">
+      <li>
+        <a href="https://mva.microsoft.com/" id="CenterLinks1_2151_4" xmlns="http://www.w3.org/1999/xht
+ml">Microsoft Virtual Academy</a>
+      </li>
+      <li>
+        <a href="https://channel9.msdn.com/" id="CenterLinks1_2151_5" x
+mlns="http://www.w3.org/1999/xhtml">Channel 9</a>
+      </li>
+      <li>
+        <a href="https://msdn.microsoft.com/magazine/" 
+id="CenterLinks1_2151_7" xmlns="http://www.w3.org/1999/xhtml">MSDN Magazine</a>
+      </li>
+    </ul>
+  </div>
+</div>
+          
+      <div data-fragmentName="CenterLinks2" id="Fragment_CenterLinks2" xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="li
+nkList">
+    <h4 class="linkListTitle">Community</h4>
+    <ul class="links">
+      <li>
+        <a href="https://social.msdn.mic
+rosoft.com/forums/en-us/home" id="CenterLinks2_2151_8" xmlns="http://www.w3.org/1999/xhtml">Forums</a>
+      </li>
+      <li>
+  
+      <a href="https://blogs.msdn.microsoft.com/developer-tools/" id="CenterLinks2_2151_9" xmlns="http://www.w3.org/1999/xhtml">
+Blogs</a>
+      </li>
+      <li>
+        <a href="https://www.codeplex.com/" id="CenterLinks2_2151_10" xmlns="http://www.w3.org/
+1999/xhtml">Codeplex</a>
+      </li>
+    </ul>
+  </div>
+</div>
+                <div data-fragmentName="CenterLinks3" id="Fragmen
+t_CenterLinks3" xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="linkList">
+    <h4 class="linkListTitle">Support</h4>
+   
+ <ul class="links">
+      <li>
+        <a href="https://msdn.microsoft.com/hh361695" id="CenterLinks3_2151_11" xmlns="http://www
+.w3.org/1999/xhtml">Self support</a>
+      </li>
+    </ul>
+  </div>
+</div>
+                <div data-fragmentName="CenterLinks4"
+ id="Fragment_CenterLinks4" xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="linkList">
+    <h4 class="linkListTitle">Prog
+rams</h4>
+    <ul class="links">
+      <li>
+        <a href="https://bizspark.microsoft.com/Startups/Index" id="CenterLinks4_215
+1_13" xmlns="http://www.w3.org/1999/xhtml">BizSpark (for startups)</a>
+      </li>
+      <li>
+        <a href="https://imagine.m
+icrosoft.com/en-us" id="CenterLinks4_2151_22" xmlns="http://www.w3.org/1999/xhtml">Microsoft Imagine (for students)</a>
+      </
+li>
+    </ul>
+  </div>
+</div>
+            </div>
+        </footer>
+
+        <footer class="bottom" role="contentinfo">
+         
+   <span class="localeContainer">
+                
+    <form class="selectLocale" id="selectLocaleForm" action="https://msdn.mic
+rosoft.com/en-us/selectlocale-dmc">
+        <input type="hidden" name="fromPage" value="https%3a%2f%2fmsdn.microsoft.com%2fen-us
+%2flibrary%2f6dekhbbc.aspx" />
+        <a href="#" onclick="$('#selectLocaleForm').submit();return false;" title="Change your la
+nguage">United States (English)</a>
+    </form>
+
+
+            </span>
+
+            <div data-fragmentName="BottomLinks" id="Frag
+ment_BottomLinks" xmlns="http://www.w3.org/1999/xhtml">
+  
+  <div class="linkList">
+    <ul class="links horizontal">
+      <li>
+
+        <a href="https://msdn.microsoft.com/en-us/flashnewsletter" id="BottomLinks_2148_7" xmlns="http://www.w3.org/1999/xhtml"
+>Newsletter</a>
+      </li>
+      <li>
+        <a href="https://msdn.microsoft.com/en-us/dn529288" id="BottomLinks_2148_8" xmlns
+="http://www.w3.org/1999/xhtml">Privacy &amp; cookies</a>
+      </li>
+      <li>
+        <a href="https://msdn.microsoft.com/en-
+us/cc300389" id="BottomLinks_2148_9" xmlns="http://www.w3.org/1999/xhtml">Terms of use</a>
+      </li>
+      <li>
+        <a hre
+f="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/" id="BottomLinks_2148_10" xmlns="http://www.w3.org/199
+9/xhtml">Trademarks</a>
+      </li>
+    </ul>
+  </div>
+</div>
+            <span class="logoLegal">
+                <span class="
+logoSpan clip67x13" role="img" tabindex="0" aria-label="microsoft logo">
+                    <img alt="logo" class="logo" src="h
+ttps://i-msdn.sec.s-msft.com/Areas/Centers/Themes/StandardDevCenter/Content/HeaderFooterSprite.png?v=636422593544160354" />
+    
+            </span>
+                <span class="copyright">© 2017 Microsoft</span>
+            </span>
+        </footer>
+    <
+/div>
+    
+
+    </div>
+
+
+        <div class="footerPrintView">
+            <div class="footerCopyrightPrintView">© 2017 Microso
+ft</div>
+        </div>
+
+        
+        
+
+        
+        
+        
+
+    <input id="tocPaddingPerLevel" type="hidden" value="
+17" />
+
+
+
+        <input id="MtpsDevice" type="hidden" value="Default" />
+
+
+<![CDATA[ Third party scripts and code linked to or 
+referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Term
+s of Use – http://www.asp.net/ajaxlibrary/CDN.ashx. ]]>
+
+        
+        
+        
+            
+        
+
+<![CDATA[ WebTrends
+ view model not available or IncludeLegacyWebTrendsScriptInGlobal feature flag is off]]>
+ 
+
+
+
+<div id="globalRequestVerification
+">
+    <input name="__RequestVerificationToken" type="hidden" value="oImL1mfNON6Nm4NWKMMYqWt6eDpcCeM2SdUB1TGK5mRSNyig6b30cOFNeQV
+Uogej3mfHICcXEoDDqE961BBjfgrPLss1" />
+</div>
+
+
+    </div>
+
+    
+
+    
+
+    
+<script type="text/javascript" class="mtps-injected"
+>
+/*<![CDATA[*/
+(function(window,document){"use strict";function preload(scripts){for(var result=[],script,e,i=0;i<scripts.lengt
+h;i++)script=scripts[i],script.hasOwnProperty("url")&&(e=document.createElement("script"),e.src=script.url,script.throwaway=e),r
+esult.push(script);return result}function inject(scripts,index){var script,elem;if(index>=scripts.length){delete mtps.injectScri
+pts;return}script=scripts[index];elem=document.createElement("script");elem.className="mtps-injected";elem.async=!1;var isLoaded
+=!1,timeoutId=0,injectNextFnName="",injectNext=elem.onerror=function(){isLoaded||(isLoaded=!0,inject(scripts,index+1),window.cle
+arTimeout(timeoutId),elem.onload=elem.onerror=elem.onreadystatechange=null,injectNextFnName&&delete mtps[injectNextFnName],elem.
+removeEventListener&&elem.removeEventListener("load",injectNext,!1))};elem.addEventListener?elem.addEventListener("load",injectN
+ext,!1):elem.readyState==="uninitialized"?elem.onreadystatechange=function(){(this.readyState==="loaded"||this.readyState==="com
+plete")&&injectNext()}:elem.onload=injectNext;script.hasOwnProperty("url")?(timeoutId=window.setTimeout(injectNext,12e4),elem.sr
+c=script.url):(injectNextFnName="_injectNextScript_"+index,mtps[injectNextFnName]=injectNext,timeoutId=window.setTimeout(injectN
+ext,2e3),elem.text="try {\n"+script.txt+"\n} finally { MTPS."+injectNextFnName+" && MTPS."+injectNextFnName+"(); }");parent.appe
+ndChild(elem)}var mtps=window.MTPS||(window.MTPS={}),parent=document.getElementsByTagName("head")[0];mtps.injectScripts=function
+(scripts){inject(preload(scripts),0)}})(window,document);
+MTPS.injectScripts([
+	{ txt: "/**/\r\n(window.MTPS || (window.MTPS = {
+})).cdnDomains || (window.MTPS.cdnDomains = { \r\n\t\"image\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"js\": \"https://i2-msd
+n.sec.s-msft.com\", \r\n\t\"css\": \"https://i-msdn.sec.s-msft.com\", \r\n\t\"ttf\": \"https://i-msdn.sec.s-msft.com\"\r\n});\r\
