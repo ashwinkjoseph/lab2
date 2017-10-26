@@ -1,0 +1,23 @@
+#include<stdio.h>
+void main()
+{
+	int bt[10],at[10],p[10],prio[10];
+	int i,j,choice,n,x;
+	printf("\t::Sheduling Algorithm Time Calculation::\n");
+	printf("1.FCFS   2.SJF   3.RR   4.PRIORITY\n");
+	printf("Select your choice of process:");
+	scanf("%d",&choice);
+	if(choice==1){
+		printf("Enter no of processes:");
+		scanf("%d",&n);
+		printf("Enter.. \nprocessid : burst time : arrival time\n");
+		for(i=0;i<n;i++){
+			scanf("%d",&p[i]);
+			printf(" :		scanf("%d",&bt[i]);
+			scanf("%d",&at[i]);
+		}
+	}
+
+
+}
+

@@ -1,0 +1,9 @@
+#include<studio.h>
+void main()
+{
+	int prc[3][100];
+	int n;
+	system.out.println("process time calculation");
+	system.out.println("choose type of processes...");
+	system.out.println("1.first come first serve
+n")

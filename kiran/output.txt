@@ -1,0 +1,40 @@
+hwlab@hwlab5:~/kiran$ ./a.out
+                                                                                
+ fork 1 taken by philosopher 1                                                  
+ philosopher 1 is thinking                                                      
+ fork 2 taken by philosopher 2                                                  
+ philosopher 2 is thinking                                                      
+ fork 3 taken by philosopher 3                                                                                                                                                           
+ philosopher 3 is thinking                                                                                                                                                               
+ philosopher 4 waiting for fork 3                                                                                                                                                        
+ philosopher 4 is hungry                                                                                                                                                                 
+ fork 4 taken by philosopher 1                                                                                                                                                           
+ philosopher 1 is eating                                                                                                                                                                 
+ philosopher 2 waiting for fork 1                                                                                                                                                        
+ philosopher 2 is hungry                                                                                                                                                                 
+ philosopher 3 waiting for fork 2                                                                                                                                                        
+ philosopher 3 is hungry                                                                                                                                                                 
+ philosopher 4 waiting for fork 3                                                                                                                                                        
+ philosopher 4 is hungry                                                                                                                                                                 
+philosopher 1 completed dinner                                                                                                                                                           
+philosopher 1 released fork 1 and 4                                                                                                                                                      
+ fork 1 taken by philosopher 2                                                                                                                                                           
+ philosopher 2 is eating                                                                                                                                                                 
+ philosopher 3 waiting for fork 2                                                                                                                                                        
+ philosopher 3 is hungry                                                                                                                                                                 
+ philosopher 4 waiting for fork 3                                                                                                                                                        
+ philosopher 4 is hungry                                                                                                                                                                 
+philosopher 2 completed dinner                                                                                                                                                           
+philosopher 2 released fork 2 and 1                                                                                                                                                      
+ fork 2 taken by philosopher 3                                                                                                                                                           
+ philosopher 3 is eating                                                                                                                                                                 
+ philosopher 4 waiting for fork 3                                                                                                                                                        
+ philosopher 4 is hungry                                                                                                                                                                 
+philosopher 3 completed dinner                                                                                                                                                           
+philosopher 3 released fork 3 and 2
+ fork 4 taken by philosopher 3
+ philosopher 3 is thinking
+ philosopher 4 taken 4 fork
+ philosopher 4 is thinking
+philosopher 4 completed dinner
+philosopher 4 released fork 4 and 3
