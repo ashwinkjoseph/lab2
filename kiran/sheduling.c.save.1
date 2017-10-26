@@ -1,0 +1,128 @@
+//sheduling algorithm
+#include<stdio.h>
+void main()
+{
+	int bt[10],at[10],wt[10],p[10],prio[10],tat[10];
+	int i,j,t2,choice,n,x,t,avtat=0,total=0,total1=0,avwt=0;
+	int choice1;
+	printf("\t::Sheduling Algorithm Time Calculation::\n");
+	do{
+		printf("1.FCFS   2.SJF   3.RR   4.PRIORITY\n");
+		printf("Select your choice of process:");
+		scanf("%d",&choice);
+		if(choice==1){
+			//first come first serve operations
+			printf("Enter no of processes:");
+			scanf("%d",&n);
+			printf("Enter...\n");
+			for(i=0;i<n;i++){
+				printf("\nburst time:");
+				scanf("%d",&bt[i]);
+				printf("\narrival time:");
+				scanf("%d",&at[i]);
+			}
+			printf("\n*************************\n");
+			printf("BURST TIME:	ARRIVAL TIME:\n");
+	                for(i=0;i<n;i++)
+	                        printf("%d\t 	%d\t\n",bt[i],at[i]);
+	
+			//sorting arrival time and also burst time
+			for(i=0;i<n;i++){
+				for(j=i;j<n;j++){
+					if(at[i]>at[j]){
+						t=at[i];
+						at[i]=at[j];
+						at[j]=t;
+						t2=bt[i];
+						bt[i]=bt[j];
+						bt[j]=t;
+					}
+				}
+			}
+			wt[0]=0;//waiting time for first process is 0
+			//calculating wt
+			for(i=1;i<n;i++){
+				for(j=0;j<i;j++){
+					wt[i]=bt[j];
+					total+=wt[i];
+				}
+			}
+			//calculating turn-around time
+			for(i=0;i<n;i++){
+				tat[i]=wt[i+1]-at[i];
+				total1+=tat[i];
+			}
+			//avarage of turnaround as well as waiting time
+			avwt=((total/n)*100);
+			avtat=((total1/n)*100);
+			printf("\n**********************************\n");
+	                printf("BURST TIME:     ARRIVAL TIME:   WAITING TIME:   TURN-AROUND TIME:\n");
+	                for(i=0;i<n;i++)
+	                        printf("%d\t",bt[i]);
+				
+			printf("\nAvarage waiting time:%d\nAvarage turn-around time:%d\n",avwt,avtat);
+			//for(i=0;i<n;i++){
+			//	printf("\n%d",wt[i]);}
+		}
+		else if(choice==2){
+			//shortest job first calculations
+			printf("Enter no of processes:");
+        	        scanf("%d",&n);
+	                printf("Enter...\n");
+	                for(i=0;i<n;i++){
+	                        printf("\nburst time:");
+	                        scanf("%d",&bt[i]);
+                        printf("\narrival time:");
+                        scanf("%d",&at[i]);
+	                }
+	                printf("\n*********************************\n");
+	                printf("BURST TIME:     ARRIVAL TIME:\n");
+		                for(i=0;i<n;i++)
+			                 printf("%d\t    %d\t\n",bt[i],at[i]);
+				}
+		else if(choice==3){
+			//round robin calculations
+			printf("Enter no of processes:");
+                	scanf("%d",&n);
+                	printf("Enter...\n");
+                	for(i=0;i<n;i++){
+                	        printf("\nburst time:");
+                	        scanf("%d",&bt[i]);
+                	        printf("\narrival time:");
+                	        scanf("%d",&at[i]);
+                	}
+                	printf("\n*****************************\n");
+                	printf("BURST TIME:     ARRIVAL TIME:\n");
+                	for(i=0;i<n;i++)
+                	        printf("%d\t    %d\t\n",bt[i],at[i]);
+	
+	
+			}
+		else if(choice==4){
+			//priority calculations
+			printf("Enter no of processes:");
+		        scanf("%d",&n);
+                	printf("Enter...\n");
+                	for(i=0;i<n;i++){
+                	        printf("\nburst time:");
+                	        scanf("%d",&bt[i]);
+                	        printf("\narrival time:");
+                	        scanf("%d",&at[i]);
+                	}
+                	printf("\n*******************************\n");
+                	printf("BURST TIME:     ARRIVAL TIME:\n");
+                	for(i=0;i<n;i++)
+                	        printf("%d\t    %d\t\n",bt[i],at[i]);
+	
+	
+			}
+		else{
+			printf("Invalid choice\n");
+		}
+	printf("Do you wish to continue?(0/1):");
+	scanf("%d",&choice1);
+	}while(choice1==1);
+
+
+}
+

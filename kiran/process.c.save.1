@@ -1,0 +1,40 @@
+#include<stdio.h>
+int insertprocess(int prc[3][100],int n){
+	int i,j;
+	printf("enter no of processes:");
+	scanf("%d",&n);
+	for(i=0;i<n;i++){
+		for(j=0;j<4;){
+			switch(j){
+				case 0: printf("process id:");
+				break;
+				case 1: printf("arrival time:");
+				break;
+			case 2: printf("burst time:");
+				break;
+				case 3: printf("priority:");
+				break;
+				default: return -1;
+				break;
+			}
+			scanf("%d",&prc[i][j]);
+			j++;
+		}
+	}
+}
+int display processtable(int prc,int n){
+	for(int i==0;i<n
+int main()
+{
+ int prc[3][100];
+ int choice;
+ printf("\tProcess time calculation\n");
+ printf("1.first come first serve\n 2.shortest job first\n 3.round robin\n 4.priority \n");
+ printf("Enter process choice...\n");
+ scanf("%d",&choice);
+ if(choice==1){
+	printf("First come first serve\n");
+	int a;
+	insertprocess(prc);
+	}
+}
