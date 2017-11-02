@@ -1,25 +1,48 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+struct directory{
+	char dname[10];
+	char fname[10][10];
+	int cnt;
+	int fcnt;
+};
 struct
 {
 char dname[10],fname[10][10],fn[10];
 int fcnt,cnt;
 }dir,two[2][10];
+struct userstruct{
+ char password[10];
+ struct directory dir[10];
+ char fname[10][10];
+ struct directory shared;
+ int cnt;
+};
 void main()
 {
 int n,m=0,a,i,j=0,flag,x=0,u,choice,fv=0;
-char ps[10],nfdel[10],pswd[10],xyz[10],nddel[10],usr1[10],usr2[10];
+char ps[10],nfdel[10],pswd[10],xyz[10],nddel[10];
+struct userstruct users[2];
 int ss,b,f,h,y;
 char nd[10],newdir[10];
 printf("TWO LEVEL DIRECTORY\n--------------------------------------------------\n");
 printf("set a password of user1:\t");
-scanf("%s",usr1);
+scanf("%s",users[0].password);
 printf("password set successfully... please use this password to login to user1\n");
 printf("set a password of user2:\t");
-scanf("%s",usr2);
+scanf("%s",users[1].password);
 printf("password set successfully... please use this password to login to user2\n");
-
+for(i = 0; i<10; i++){
+	users[1].dir[i].cnt = 0;
+}
+for(i = 0; i<10; i++){
+	users[0].dir[i].cnt = 0;
+}
+users[0].cnt = 0;
+users[1].cnt = 0;
+users[1].shared.cnt = 0;
+users[0].shared.cnt = 0;
 do{
 printf("\n1.user1\n2.user2\n3.exit\n");
 scanf("%d",&n);
@@ -27,18 +50,18 @@ if(n==1||n==2)
 {
     if(n==1){
    
-   strcpy(pswd,usr1);
+   strcpy(pswd,users[0].password);
     u=0;}
     else if(n==2){
     u=1;
-     strcpy(pswd,usr2);}
+     strcpy(pswd,users[1].password);}
     printf("PASSWORD:\n");
     scanf("%s",ps);
     if(strcmp(ps,pswd)==0)
     {
      printf("password accepted...\n\n\n********************************USER%d**************************************\n",u+1);
       do{
-       printf("\n1.ENTER   2.CREATE DIRECTORY    3.DELETE A DIRECTORY   4.LIST   5.CREATE FILE    6.DELETE FILE   7.EXIT\n");
+       printf("\n1.ENTER   2.CREATE DIRECTORY    3.DELETE A DIRECTORY   4.LIST   5.CREATE FILE    6.DELETE FILE   7.EXIT 8.SHARED FILES 9.SHARE FILE\n");
        scanf("%d",&b);
        switch(b)
       {
@@ -48,21 +71,23 @@ printf("name of directory:\t");
       scanf("%s",xyz);
 flag=0;
 for(x=0;x<m;x++){
-if(strcmp(two[u][x].dname,xyz)==0)
+if(strcmp(users[u].dir[x].dname,xyz)==0)
 {
 flag=1;
      do{   
-      printf("\n1.add file   2.delete    3.list   4.exit\n");
+      printf("\n1.add file   2.delete    3.list   4.exit 5.share file\n");
       scanf("%d",&a);
       switch(a)
       {
        case 1:
-       {flag=0;
+       {
+        flag=0;
         printf("name of new file:\n" );
         scanf("%s",nd);
-        for(two[u][x].cnt=0;two[u][x].cnt<two[u][x].fcnt;two[u][x].cnt++)
+        i = 0;
+        for(i=0;i<users[u].dir[x].cnt;i++)
          {
-         if(strcmp(nd,two[u][x].fname[two[u][x].cnt])==0)
+         if(strcmp(nd,users[u].dir[x].fname[i])==0)
            {
            flag=1;
            printf("sorry...file name already exists\n"); 
@@ -70,8 +95,9 @@ flag=1;
          }
         if(flag==0)
          {
-         strcpy(two[u][x].fname[two[u][x].fcnt],nd);
-        two[u][x].fcnt++;
+         users[u].dir[x].cnt++;
+         strcpy(users[u].dir[x].fname[users[u].dir[x].cnt],nd);
+//        two[u][x].fcnt++;
         printf("\nfile created\n");
          } 
         break;
@@ -81,19 +107,20 @@ flag=1;
        flag=0;
        printf("enter the name of file to delete\n");
        scanf("%s",nd);
-       for(two[u][x].cnt=0;two[u][x].cnt<two[u][x].fcnt;two[u][x].cnt++)
+       i = 0;
+       for(i=0;i<users[u].dir[x].cnt;i++)
       {
-         if(strcmp(nd,two[u][x].fname[two[u][x].cnt])==0)
+         if(strcmp(nd,users[u].dir[x].fname[i])==0)
         {
             flag=1;
             printf("file found...\n");
-            while(two[u][x].cnt<two[u][x].fcnt)
+            while(i<users[u].dir[x].cnt)
             {
-             strcpy(two[u][x].fname[two[u][x].cnt],two[u][x].fname[two[u][x].cnt+1]);
-             two[u][x].cnt++;
+             strcpy(users[u].dir[x].fname[i],users[u].dir[x].fname[i+1]);
+             i++;
            }
          printf("deleted...\n");
-         two[u][x].fcnt--; 
+         users[u].dir[x].cnt--; 
         }
       }
      if(flag==0)
@@ -102,21 +129,44 @@ flag=1;
        }
       case 3:
       {
-      if(two[u][x].fcnt==0){
+      if(users[u].dir[x].cnt==0){
        printf("\nempty\n");}
        else{
       printf("files are\n");
-      for(two[u][x].cnt=0;two[u][x].cnt<two[u][x].fcnt;two[u][x].cnt++)
+      for(i=0;i<users[u].dir[x].cnt;i++)
       {   
-             printf("%s\n",two[u][x].fname[two[u][x].cnt]);
+             printf("%s\n",users[u].dir[x].fname[i]);
             
        }}
 
        break;
       }
+      case 5:
+       {
+        flag=0;
+        printf("name of file:\n" );
+        scanf("%s",nd);
+        i = 0;
+        for(i=0;i<users[(u+1)%2].shared.cnt;i++)
+         {
+         if(strcmp(nd,users[(u+1)%2].shared.fname[i])==0)
+           {
+           flag=1;
+           printf("sorry...file name already exists\n"); 
+           }
+         }
+        if(flag==0)
+         {
+         users[(u+1)%2].shared.cnt++;
+         strcpy(users[(u+1)%2].shared.fname[users[(u+1)%2].shared.cnt],nd);
+//        two[u][x].fcnt++;
+        printf("\nfile shared\n");
+         } 
+        break;
+       }
       }
       }while(a!=4);
-printf("\nexiting from directory %s...\n",two[u][x].dname);
+printf("\nexiting from directory...\n");
 }
 }
 if(flag==0)
@@ -129,13 +179,13 @@ printf("name of new directory:\t");
 scanf("%s",newdir);
 for(y=0;y<m;y++)
 {
-    if(strcmp(newdir,two[u][y].dname)==0){
+    if(strcmp(newdir,users[u].dir[y].dname)==0){
                  flag=1;
              printf("sorry...this name already exists\n");}
 }
 if(flag==0)
 {
-strcpy(two[u][x].dname,newdir);
+strcpy(users[u].dir[y].dname,newdir);
 printf("directory created successfully...\n");
 m++;
 x++; }    
@@ -147,13 +197,13 @@ flag=0;
 printf("name of directory:\t");
 scanf("%s",nddel);
 for(x=0;x<m;x++){
-if(strcmp(two[u][x].dname,nddel)==0)
+if(strcmp(users[u].dir[x].dname,nddel)==0)
 {
 flag=1;
  h=x;
      while(h<m)
      {
-      strcpy(two[u][h].dname,two[u][h+1].dname);
+      strcpy(users[u].dir[h].dname,users[u].dir[h+1].dname);
       h++;
      }
 
@@ -179,7 +229,7 @@ if(m==0&&fv==0)
     
     for(x=0;x<m;x++)
      {
-      printf("%s\n",two[u][x].dname);
+      printf("%s\n",users[u].dir[x].dname);
      }
      
     printf("files are:\n");
@@ -188,7 +238,7 @@ if(m==0&&fv==0)
     else{
     for(i=0;i<fv;i++)
      {
-      printf("%s\n",two[u][i].fn);
+      printf("%s\n",users[u].fname[i]);
      }
 }
        }
@@ -201,13 +251,13 @@ case 5:
    flag=0;
    for(i=0;i<fv;i++)
    {
-      if(strcmp(nd,two[u][i].fn)==0){
+      if(strcmp(nd,users[u].fname[i])==0){
               flag=1;
               printf("file name already exists\n");
             }
 }
 if(flag==0) {
-   strcpy(two[u][fv].fn,nd);
+   strcpy(users[u].fname[i],nd);
    fv++;}
 
 
@@ -219,13 +269,13 @@ printf("name of file to delete:\t");
 scanf("%s",nd);
 flag=0;
 for(i=0;i<fv;i++){
-if(strcmp(two[u][i].fn,nd)==0)
+if(strcmp(users[u].fname[i],nd)==0)
 {
 flag=1;
  h=i;
      while(h<fv)
      {
-      strcpy(two[u][h].dname,two[u][h+1].dname);
+      strcpy(users[u].fname[h],users[u].fname[h+1]);
       h++;
      }
 
@@ -237,6 +287,50 @@ if(flag==0)
    printf("file doesnot exist\n");
 break;
 }
+case 8:
+{
+if(users[u].shared.cnt==0)
+      {
+       printf("empty\n");
+      }
+      else
+       {
+     
+    printf("files are:\n");
+  if(users[u].shared.cnt==0)
+       printf("empty...\n");
+    else{
+    for(i=0;i<users[u].shared.cnt;i++)
+     {
+      printf("%s\n",users[u].shared.fname[i]);
+     }
+}
+       }
+ break;
+ }
+case 9:
+{
+flag=0;
+printf("name of file:\n" );
+scanf("%s",nd);
+i = 0;
+for(i=0;i<users[(u+1)%2].shared.cnt;i++)
+ {
+ if(strcmp(nd,users[(u+1)%2].shared.fname[i])==0)
+   {
+   flag=1;
+   printf("sorry...file name already exists\n"); 
+   }
+ }
+if(flag==0)
+ {
+ users[(u+1)%2].shared.cnt++;
+ strcpy(users[(u+1)%2].shared.fname[users[(u+1)%2].shared.cnt],nd);
+//        two[u][x].fcnt++;
+printf("\nfile shared\n");
+ } 
+break;
+}
 }    
     }while(b!=7);
      printf("exiting from user%d...\n",u+1);  
@@ -246,8 +340,3 @@ break;
 }
 }while(n!=3);
 }
-
-
-
-
-

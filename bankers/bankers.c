@@ -1,7 +1,9 @@
-//Kiran.K.K
-//class no :34
-//S5R
-//bankers algorithm
+/*
+Joseph Ashwin Kottapurath
+S5R, 33,
+Banker's Algorithm
+*/
+
 #include<stdio.h>
 void main()
 {
@@ -104,57 +106,3 @@ void main()
 	else
 		printf("\nNo. of resources required by process is greater than total no. of resources");
 }
-
-
-
-output
-
-
-Enter the no. of processes  :  5
-
-Enter the no. of resources  :  3
-Enter the maximun no. of each resources    :  10
-5
-7
-Enter the maximum no. of each resources required by the processes : 
-Enter maximum no. of resouces for process 1  :7
-5
-3
-
-Enter maximum no. of resouces for process 2  :3
-2
-2
-
-Enter maximum no. of resouces for process 3  :9
-0
-2 
-
-Enter maximum no. of resouces for process 4  :2
-2
-2
-
-Enter maximum no. of resouces for process 5  :4
-3
-3
-Enter the no. of each resources allocated by the processes : 
-Enter no. of allocated resouces for process 1  :0
-1
-0
-
-Enter no. of allocated resouces for process 2  :2
-0
-0
-
-Enter no. of allocated resouces for process 3  :3
-0
-2
-
-Enter no. of allocated resouces for process 4  :2
-1
-1
-
-Enter no. of allocated resouces for process 5  :0
-0
-2
-
-Process is in a safe state and the safe sequence is    P2	P4	P5	P1	P3	

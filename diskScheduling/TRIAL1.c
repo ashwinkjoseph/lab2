@@ -69,38 +69,36 @@ void cscan(int noq, int qu[10], int st, int n)
 {
  int i,j,s=0;
  int dir = 0;
- for(i = 0; i<noq; i++){
- 	printf("%d", qu[noq]);
- }
-// for(i=0; i<noq; i++){
-// 	s=s+st;
-// 	
-// 	if(qu[i]>st){
-// 		st = 
-// 	}
- //}
-// for(i=0;i<noq;i++)
-// {
-//  if(st < qu[i])
-//  {
-//   for(j=i-1; j>= 0;j--)
-//   {
-//    s=s+abs(st - qu[j]);
-//    st = qu[j];
-//    }
-//   if(ch == 3)
-//   {
-//   s = s + abs(st - 0);
- //  st = 0;
- //  }
-//  for(j = 1;j < noq;j++)
-//  {
-//  s= s + abs(st - qu[j]);
-//  st = qu[j];
-//   }
-//   break;
+// printf("\nRecieved Data:");
+//    s = s + abs(st - 0);
+// for(i = 0; i<noq; i++){
+// 	printf(" %d", qu[i]);
 // }
-//}
+// printf("\n");
+ for(i=0;i<noq;i++)
+ {
+  if(st < qu[i])
+  {
+//  	printf("i: %d, qu[%d]: %d", i, i, qu[i]); 
+     break; 
+  }
+ }
+ for(j=i; j < noq ;j++)
+   {
+//   printf("s: %d, adding: %d\n", s, qu[j]);
+    s=s+abs(qu[j] - st);
+    st = qu[j];
+    }
+//    printf("s: %d, adding: %d\n", s, n);
+    s=s+abs(n - st - 1);
+    s=s+abs(n -1);
+    st = 0;
+  for(j=0; j<i ;j++)
+   {
+//   printf("s: %d, adding: %d\n", s, qu[j]);
+    s=s+abs(qu[j]-st);
+    st = qu[j];
+    }
 printf("\n Total seek time : %d",s);
 }
 
