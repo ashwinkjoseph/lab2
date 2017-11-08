@@ -1,3 +1,8 @@
+/*
+Text Editor
+Joseph Ashwin Kottapurath
+33, S5R
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -62,7 +67,7 @@ void writeFile(struct file f){
 	}
 }
 
-void delete(struct file f){
+void deleter(struct file f){
 	int start;
 	int end;
 	readFile(f);
@@ -75,19 +80,24 @@ void delete(struct file f){
 	char *temp = (char*) malloc(sizeof(char)*256);
 	for(k = 0; k<start; k++){
 		if(k%256<2){
-			temp = realloc(temp, sizeof(char*256);
+			temp = realloc(temp, sizeof(char)*256);
 		}
 		temp[k] = f.body[k];
 	}
-	i = k
-	*f.indexOn = k;
+	i = k;
+	*(f.indexOn) = k;
+//	printf("FROM END+1: %d and length: %d\n", (end+1), strlen(f.body));
 	for(k = (end+1); k<strlen(f.body); k++){
 		if(i%256<2){
-			temp = realloc(temp, sizeof(char*256);
+			temp = realloc(temp, sizeof(char)*256);
 		}
 		temp[i] = f.body[k];
+		i++;
 	}
 	free(f.body);
+	printf("Heres the temp: ");
+	printf("%s", temp);
+	printf("\n");
 	f.body = (char*) malloc(sizeof(temp));
 	strcpy(f.body, temp);
 }
@@ -97,7 +107,7 @@ void navigateTo(struct file f){
 	printf("Enter the index to navigateTo: ");
 	scanf("%d", &index);
 	if((index<strlen(f.body))&&(index>=0)){
-		f.indexOn = index;
+		*f.indexOn = index;
 	}
 	else{
 		printf("Index out of Range\n");
@@ -105,8 +115,25 @@ void navigateTo(struct file f){
 }
 
 int main(void){
-	struct file f = createFile("something");
-	writeFile(f);
-	readFile(f);
+	printf("Enter the name of the File: ");
+	char *name;
+	scanf("%ms", &name);
+	struct file f = createFile(name);
+	while(1){
+		int c;
+		printf("What do you want? \n1. Write To File\n2.Read File\n3. Navigate to an index\n4. Delete certain words");
+		scanf("%d", &c);
+		switch(c){
+			case 1: writeFile(f);
+				break;
+			case 2: readFile(f);
+				break;
+			case 3: navigateTo(f);
+				break;
+			case 4: deleter(f);
+				break;
+			default: printf("Wrong Option!!!\n");
+		}
+	}
 	return 0;
 }
