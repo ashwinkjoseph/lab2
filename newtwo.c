@@ -4,8 +4,9 @@
 struct directory{
 	char dname[10];
 	char fname[10][10];
+	char dir[10][10];
 	int cnt;
-	int fcnt;
+	int dcnt;
 };
 struct
 {
@@ -35,14 +36,18 @@ scanf("%s",users[1].password);
 printf("password set successfully... please use this password to login to user2\n");
 for(i = 0; i<10; i++){
 	users[1].dir[i].cnt = 0;
+	users[1].dir[i].dcnt = 0;
 }
 for(i = 0; i<10; i++){
 	users[0].dir[i].cnt = 0;
+	users[0].dir[i].dcnt = 0;
 }
 users[0].cnt = 0;
 users[1].cnt = 0;
 users[1].shared.cnt = 0;
 users[0].shared.cnt = 0;
+users[1].shared.dcnt = 0;
+users[0].shared.dcnt = 0;
 do{
 printf("\n1.user1\n2.user2\n3.exit\n");
 scanf("%d",&n);
@@ -157,8 +162,8 @@ flag=1;
          }
         if(flag==0)
          {
-         users[(u+1)%2].shared.cnt++;
          strcpy(users[(u+1)%2].shared.fname[users[(u+1)%2].shared.cnt],nd);
+         users[(u+1)%2].shared.cnt++;
 //        two[u][x].fcnt++;
         printf("\nfile shared\n");
          } 
@@ -295,6 +300,14 @@ if(users[u].shared.cnt==0)
       }
       else
        {
+       printf("directories are:\n"); 
+    if(users[u].shared.dcnt==0)
+       printf("empty...\n");
+    
+    for(x=0;x<users[u].shared.dcnt;x++)
+     {
+      printf("%s\n",users[u].shared.dir[x]);
+     }
      
     printf("files are:\n");
   if(users[u].shared.cnt==0)
@@ -324,10 +337,33 @@ for(i=0;i<users[(u+1)%2].shared.cnt;i++)
  }
 if(flag==0)
  {
- users[(u+1)%2].shared.cnt++;
  strcpy(users[(u+1)%2].shared.fname[users[(u+1)%2].shared.cnt],nd);
+ users[(u+1)%2].shared.cnt++;
 //        two[u][x].fcnt++;
 printf("\nfile shared\n");
+ } 
+break;
+}
+case 10:
+{
+flag=0;
+printf("name of directory:\n" );
+scanf("%s",nd);
+i = 0;
+for(i=0;i<users[(u+1)%2].shared.dcnt;i++)
+ {
+ if(strcmp(nd,users[(u+1)%2].shared.dir[i])==0)
+   {
+   flag=1;
+   printf("sorry...directory already exists\n"); 
+   }
+ }
+if(flag==0)
+ {
+ strcpy(users[(u+1)%2].shared.dir[users[(u+1)%2].shared.dcnt],nd);
+ users[(u+1)%2].shared.dcnt++;
+//        two[u][x].fcnt++;
+printf("\ndirectory shared\n");
  } 
 break;
 }
