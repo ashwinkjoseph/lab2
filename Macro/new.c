@@ -1,147 +1,108 @@
-// sslLab.cpp : Defines the entry point for the console application.
-//
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 
-struct SYM {
+struct SYM{
 	char *name;
-	int index;
-}*SYMTAB = NULL;
-int SYMi = 0;
+	int *index;
+}*SYMTAB=NULL;
 
-struct Data {
+struct Data{
 	char *data;
-}*DTAB = NULL;
+}*DTAB=NULL;
+
+int SYMi = 0;
 int Datai = 0;
 
-void addToSYM(int i, char *name, int index) {
-	if (SYMTAB == NULL) {
+void addToSYM(char *name){
+	if(SYMTAB==NULL){
 		SYMTAB = (struct SYM*) malloc(sizeof(struct SYM));
 	}
-	else {
-		SYMTAB = (struct SYM*) realloc(SYMTAB, sizeof(struct SYM));
+	else{
+		SYMTAB = realloc(SYMTAB, sizeof(struct SYM));
 	}
-	SYMTAB[i].name = (char*)malloc(sizeof(name));
-	strcpy(SYMTAB[i].name, name);
-	//SYMTAB[i].index = (int*)malloc(sizeof(int));
-	SYMTAB[i].index = index;
+	SYMTAB[SYMi].name = (char*) malloc(sizeof(name));
+	strcpy(SYMTAB[SYMi].name, name);
+	SYMTAB[SYMi].index = (int*) malloc(sizeof(int));
+	*SYMTAB[SYMi].index = Datai;
+	SYMi++;
 }
 
-void addToDTAB(int i, char *data) {
-	if (DTAB == NULL) {
+void addToDTAB(char *data){
+	if(DTAB==NULL){
 		DTAB = (struct Data*) malloc(sizeof(struct Data));
 	}
-	else {
-		DTAB = (struct Data*) realloc(DTAB, sizeof(struct Data));
+	else{
+		DTAB = realloc(DTAB, sizeof(struct Data));
 	}
-	DTAB[i].data = (char*)malloc(sizeof(data));
-	strcpy(DTAB[i].data, data);
+	DTAB[Datai].data = (char*) malloc(sizeof(data));
+	strcpy(DTAB[Datai].data, data);
 }
 
-int* LookUp(char *name, int i) {
-	int j = 0;
-	for (j = 0; j <= i; j++) {
-		if (SYMTAB != NULL) {
-			if (strcmp(SYMTAB[j].name, name)) {
-				return &SYMTAB[j].index;
+int* LookUp(char *name, int i){
+	if(SYMi>1){	
+		int j = 0; 
+		for(j=0; j<i; j++){
+			if(strcmp(SYMTAB[i].name, name)==0){
+				return SYMTAB[i].index;
+			}
+		}
+	}else{
+		if(SYMTAB!=NULL){
+			if(strcmp(SYMTAB[0].name, name)==0){
+				return SYMTAB[0].index;
 			}
 		}
 	}
 	return NULL;
 }
 
-int main(void) {
-	FILE *fp = fopen("Source.cpp", "r");
-	FILE *fi = fopen("macroFileInter.cpp", "a");
-	char *data = (char*) malloc(sizeof(char)*256);
-	if (fp == NULL) {
+int main(void){
+	FILE *fp = fopen("macroFile.c", "r");
+	FILE *fo = fopen("macroFileInter.c", "w");
+	char *data = (char*) malloc(sizeof(char));
+	char *token;
+	int *p = NULL;
+	if(fp==	NULL){
 		printf("File couldn't be opened!!!\n");
 	}
-	else {
-		char *temp = (char*)malloc(sizeof(char) * 256);
-		while (fgets(data, 50, fp) != NULL) {
-			int t = 0;
-			for (int i = 0; i < strlen(data); i++) {
-				temp[t] = data[i];
-				t++;
-				if (data[i + 1] == ' ') {
-					i++;
-					temp[t] = '\0';
-					if (strcmp(temp, "#define")) {
-						t = 0;
-						for (int j = 1; j < strlen(data); j++) {
-							if (data[i + j] == ' ') {
-								i = i + j;
-								break;
+	else{	
+		while(fgets(data, 1024, fp)!=NULL){
+			token = strtok(data, " ");
+			if(token!=NULL){
+				if(strcmp(token, "#define")==0){
+					token = strtok(NULL, " ");
+					if(token!=NULL){
+						p = LookUp(token, SYMi);
+						if(p!=NULL){
+							printf("The Macro has already been defined");
+						}else{
+							addToSYM(token);
+							token = strtok(NULL, " ");
+							if(token!=NULL){
+								token[strlen(token)-1] = '\0';
+								addToDTAB(token);
 							}
-							temp[t] = data[i + j];
-							t++;
 						}
-						temp[t] = '\0';
-						t = 0;
-						int *p = LookUp(temp, SYMi);
-						if (p != NULL) {
-							printf("MACRO DEFINED AGAIN");
-						}
-						else {
-							addToSYM(SYMi, temp, Datai);
-							int flag = 0;
-							for (int j = 1; j < strlen(data); j++) {
-								//while (data[i + j] == ' ') {
-								//	j++;
-								//}
-								if (data[i + j] == '{') {
-									flag = 1;
-								}
-								else {
-									flag = 0;
-								}
-								j++;
-								//while (data[i + j] == ' ') {
-									//j++;
-								//}
-								if (flag == 0) {
-									t = 0;
-									while ((i + j) < strlen(data)) {
-										if (data[i + j] == ' ') {
-											temp[t] = '\0';
-											t++;
-											i = i + j;
-											break;
-										}
-										printf("%c", data[i + j]);
-										//temp[t] = data[i + j];
-										t++;
-										j++;
-									}
-								}
-								else {
-									t = 0;
-									while ((i + j) < strlen(data)) {
-										if (data[i + j] == '}') {
-											temp[t] = '\0';
-											t++;
-											i = i + j;
-											break;
-										}
-										temp[t] = data[i + j];
-										t++;
-									}
-								}
-							}
-							addToDTAB(Datai, temp);
-							SYMi++;
-							Datai++;
-						}
-					}
-					else {
-						fputs(temp, fi);
+						p = NULL;
 					}
 				}
+				else{
+					while(token!=NULL){
+						p = NULL;
+						p = LookUp(token, SYMi);
+						if(p==NULL){
+							fputs(token, fo);
+							fputs(" ", fo);
+						}else{
+							fputs(DTAB[*p].data, fo);
+							fputs(" ", fo);
+						}
+						token = strtok(NULL, " ");
+					}
+					fputs("\n", fo);
+				}
 			}
-
 		}
 	}
 	return 0;
