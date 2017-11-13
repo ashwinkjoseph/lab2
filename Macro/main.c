@@ -14,6 +14,20 @@ struct Data{
 int SYMi = 0;
 int Datai = 0;
 
+
+void trim(char *str)
+{
+	char ptr[strlen(str)+1];
+	int i,j=0;
+	for(i=0;str[i]!='\0';i++)
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+			ptr[j++]=str[i];
+	}
+	ptr[j]='\0';
+	strcpy(str, ptr);
+} 
+
 void addToSYM(char *name){
 	if(SYMTAB==NULL){
 		SYMTAB = (struct SYM*) malloc(sizeof(struct SYM));
@@ -78,10 +92,41 @@ int main(void){
 							printf("The Macro has already been defined");
 						}else{
 							addToSYM(token);
+							char *tempData = (char*) malloc(sizeof(char)*256);
 							token = strtok(NULL, " ");
-							if(token!=NULL){
-								token[strlen(token)-1] = '\0';
-								addToDTAB(token);
+							while(1){
+								while(token!=NULL){
+									printf("tempData: %s\n", tempData);
+									printf("token: %s\n", token);
+									if(token[strlen(token)-1]=='\n')
+										token[strlen(token)-1] = '\0';
+									if(strcmp(token, "\\")==0){
+										strcat(tempData, "\n");
+										break;
+									}
+									if(strcmp(token, "}")==0)
+										break;
+									if(strcmp(token, "{")!=0)
+										strcat(tempData, token);
+									token = strtok(NULL, " ");
+								}
+								if(strcmp(token, "}")==0){
+									printf("I got } \n");
+									addToDTAB(tempData);
+									free(tempData);
+									break;
+								}
+								if(strcmp(token, "\\")==0){
+									if(fgets(data, 1024, fp)!=NULL){
+										printf("Data: %s\n", data);
+										token = strtok(data, " ");
+										trim(token);
+										printf("Token: %s\n", token);
+									}
+								}
+								else{
+									printf("Adding: %s\n", tempData);
+								}
 							}
 						}
 						p = NULL;

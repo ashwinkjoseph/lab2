@@ -8,7 +8,10 @@
  
 int main(void){
  
-	printf("Here's the Data: 35 ");
+	printf("Here's the Data: 35
+45
+54
+ ");
  
 	return 0;
  
